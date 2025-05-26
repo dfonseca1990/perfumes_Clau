@@ -1,369 +1,214 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Perfumes Claudia - Tienda Online</title>
-<style>
-  /* Reset básico */
-  * {
-    box-sizing: border-box;
-  }
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #fff5f8;
-    color: #4a2c3b;
-    margin: 0;
-    padding: 0;
-  }
-  header {
-    background: #b56373;
-    color: white;
-    padding: 1.5rem 1rem;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 8px rgba(181, 99, 115, 0.7);
-  }
-  header h1 {
-    margin: 0;
-    font-weight: 700;
-    letter-spacing: 2px;
-    font-size: 1.8rem;
-  }
-  nav {
-    margin-top: 0.5rem;
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-  }
-  nav a {
-    color: #ffe6f0;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: color 0.3s ease;
-  }
-  nav a:hover {
-    color: #fff;
-    text-decoration: underline;
-  }
-
-  main {
-    max-width: 1100px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
-
-  section.catalogo {
-    flex: 2;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.8rem;
-  }
-
-  .perfume {
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgb(181 99 115 / 0.15);
-    padding: 1rem;
-    transition: transform 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .perfume:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 10px 20px rgb(181 99 115 / 0.3);
-  }
-  .perfume img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 12px;
-    margin-bottom: 1rem;
-  }
-  .perfume h3 {
-    margin: 0.2rem 0 0.4rem;
-    font-size: 1.3rem;
-    color: #b54e61;
-  }
-  .perfume p {
-    font-size: 0.9rem;
-    color: #7e4b56;
-    margin-bottom: 1rem;
-    text-align: center;
-    flex-grow: 1;
-  }
-  .precio {
-    font-weight: 700;
-    color: #a33543;
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-  }
-  button.add-to-cart {
-    background: #e3497d;
-    border: none;
-    color: white;
-    padding: 0.6rem 1.4rem;
-    border-radius: 25px;
-    font-weight: 700;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-    width: 100%;
-  }
-  button.add-to-cart:hover {
-    background: #bb3561;
-  }
-
-  aside.carrito {
-    flex: 1;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgb(181 99 115 / 0.2);
-    padding: 1rem 1.5rem;
-    display: flex;
-    flex-direction: column;
-    max-height: 600px;
-    min-width: 320px;
-  }
-  aside.carrito h2 {
-    margin-top: 0;
-    border-bottom: 3px solid #b56373;
-    padding-bottom: 0.5rem;
-    color: #b54e61;
-    font-size: 1.5rem;
-    font-weight: 700;
-  }
-  ul.cart-items {
-    list-style: none;
-    padding: 0;
-    margin: 1rem 0 0;
-    flex-grow: 1;
-    overflow-y: auto;
-  }
-  ul.cart-items li {
-    display: flex;
-    justify-content: space-between;
-    background: #ffe6f0;
-    margin-bottom: 0.7rem;
-    border-radius: 10px;
-    padding: 0.5rem 0.8rem;
-    align-items: center;
-  }
-  ul.cart-items li .info {
-    flex-grow: 1;
-  }
-  ul.cart-items li .info span {
-    display: block;
-  }
-  ul.cart-items li .info .name {
-    font-weight: 600;
-    font-size: 1rem;
-    color: #9c3d53;
-  }
-  ul.cart-items li .info .qty-price {
-    font-size: 0.85rem;
-    color: #7e4b56;
-  }
-  ul.cart-items li button.remove-btn {
-    background: transparent;
-    border: none;
-    color: #b54e61;
-    font-weight: 900;
-    font-size: 1.3rem;
-    cursor: pointer;
-    padding: 0 0.5rem;
-    transition: color 0.3s ease;
-  }
-  ul.cart-items li button.remove-btn:hover {
-    color: #e3497d;
-  }
-  .cart-total {
-    font-weight: 700;
-    font-size: 1.3rem;
-    color: #b54e61;
-    margin: 1rem 0 0;
-    text-align: right;
-  }
-  button#send-whatsapp {
-    background: #25d366;
-    color: white;
-    border: none;
-    padding: 0.9rem 1.6rem;
-    border-radius: 30px;
-    font-weight: 700;
-    font-size: 1.2rem;
-    cursor: pointer;
-    margin-top: auto;
-    box-shadow: 0 5px 10px rgb(37 211 102 / 0.5);
-    transition: background-color 0.3s ease;
-  }
-  button#send-whatsapp:hover {
-    background: #1da851;
-  }
-  footer {
-    background: #b56373;
-    color: white;
-    text-align: center;
-    padding: 1.5rem 1rem;
-    margin-top: 3rem;
-    font-size: 0.9rem;
-  }
-  footer a {
-    color: #fce4ec;
-    text-decoration: underline;
-  }
-
-  @media (max-width: 900px) {
-    main {
-      flex-direction: column;
-      max-width: 100%;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Perfumes Claudia</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f2f2f2;
     }
-    aside.carrito {
-      max-height: none;
-      min-width: 100%;
-      margin-top: 2rem;
+    h1 {
+      text-align: center;
     }
-  }
-</style>
+    .perfume {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin-bottom: 10px;
+      background: white;
+    }
+    button {
+      margin-top: 5px;
+      padding: 8px 12px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .cart {
+      margin-top: 20px;
+      padding: 15px;
+      background: #fff;
+      border: 2px solid #ccc;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+    input, select {
+      padding: 5px;
+      margin-top: 5px;
+      width: 100%;
+    }
+    .info-section {
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <h1>Perfumes Claudia</h1>
-  <nav>
-    <a href="#catalogo">Catálogo</a>
-    <a href="#carrito">Carrito</a>
-    <a href="#contacto">Contacto</a>
-  </nav>
-</header>
+  <h1>Tienda de Perfumes Claudia</h1>
 
-<main>
-  <section id="catalogo" class="catalogo" aria-label="Catálogo de perfumes">
-    <article class="perfume" data-id="1" data-name="Perfume Bella" data-price="25">
-      <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80" alt="Perfume Bella" />
-      <h3>Perfume Bella</h3>
-      <p>Aroma floral con toques de vainilla.</p>
-      <div class="precio">$25.00</div>
-      <button class="add-to-cart">Agregar al carrito</button>
-    </article>
-    <article class="perfume" data-id="2" data-name="Perfume Elegance" data-price="30">
-      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Perfume Elegance" />
-      <h3>Perfume Elegance</h3>
-      <p>Notas amaderadas con fondo de ámbar.</p>
-      <div class="precio">$30.00</div>
-      <button class="add-to-cart">Agregar al carrito</button>
-    </article>
-    <article class="perfume" data-id="3" data-name="Perfume Sweet Love" data-price="20">
-      <img src="https://images.unsplash.com/photo-1508163221342-1798d1a4c5e9?auto=format&fit=crop&w=400&q=80" alt="Perfume Sweet Love" />
-      <h3>Perfume Sweet Love</h3>
-      <p>Dulce y juvenil, perfecto para casual.</p>
-      <div class="precio">$20.00</div>
-      <button class="add-to-cart">Agregar al carrito</button>
-    </article>
-  </section>
+  <div class="perfume" data-id="1" data-name="Perfume A" data-price="19.99">
+    <h3>Perfume A</h3>
+    <p>Precio: $19.99</p>
+    <button class="add-to-cart">Agregar al carrito</button>
+  </div>
 
-  <aside id="carrito" class="carrito" aria-label="Carrito de compras">
-    <h2>Tu Carrito</h2>
-    <ul class="cart-items"></ul>
-    <div class="cart-total">Total: $0.00</div>
-    <button id="send-whatsapp">Enviar pedido por WhatsApp</button>
-  </aside>
-</main>
+  <div class="perfume" data-id="2" data-name="Perfume B" data-price="29.99">
+    <h3>Perfume B</h3>
+    <p>Precio: $29.99</p>
+    <button class="add-to-cart">Agregar al carrito</button>
+  </div>
 
-<footer id="contacto">
-  <p>Contacto:  
-    <a href="mailto:perfumesclaudia@email.com">perfumesclaudia@email.com</a> |  
-    <a href="https://instagram.com/perfumesclaudia" target="_blank" rel="noopener noreferrer">Instagram</a> |  
-    <a href="https://wa.me/13465464520" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-  </p>
-  <p>© 2025 Perfumes Claudia</p>
-</footer>
+  <div class="perfume" data-id="3" data-name="Perfume C" data-price="39.99">
+    <h3>Perfume C</h3>
+    <p>Precio: $39.99</p>
+    <button class="add-to-cart">Agregar al carrito</button>
+  </div>
 
-<script>
-  const cart = [];
-  const cartItemsEl = document.querySelector('.cart-items');
-  const cartTotalEl = document.querySelector('.cart-total');
-  const whatsappNumber = "13465464520"; // tu número USA +1 sin espacios ni signos
+  <div class="cart">
+    <h2>Carrito de Compras</h2>
+    <div id="cart-items"></div>
+    <p><strong>Subtotal:</strong> $<span id="subtotal">0.00</span></p>
+    <p><strong>Envío:</strong> $<span id="shipping">5.00</span></p>
+    <p><strong>Impuestos:</strong> $<span id="taxes">0.00</span></p>
+    <p><strong>Total:</strong> $<span id="total">0.00</span></p>
+  </div>
 
-  function addToCart(product) {
-    const existing = cart.find(item => item.id === product.id);
-    if (existing) {
-      existing.quantity++;
-    } else {
-      cart.push({...product, quantity: 1});
+  <div class="info-section">
+    <h2>Información del Cliente</h2>
+    <label for="customer-name">Nombre:</label>
+    <input type="text" id="customer-name" placeholder="Tu nombre" />
+
+    <label for="customer-address">Dirección:</label>
+    <input type="text" id="customer-address" placeholder="Tu dirección" />
+
+    <label for="customer-city">Ciudad:</label>
+    <select id="customer-city">
+      <option value="">Selecciona tu ciudad</option>
+      <option value="Miami">Miami</option>
+      <option value="New York">New York</option>
+      <option value="Los Angeles">Los Angeles</option>
+      <option value="Houston">Houston</option>
+      <option value="Chicago">Chicago</option>
+      <!-- Agrega más ciudades según sea necesario -->
+    </select>
+  </div>
+
+  <button id="send-whatsapp">Enviar Pedido por WhatsApp</button>
+
+  <script>
+    const cart = [];
+    const shippingCost = 5.00;
+    const taxRates = {
+      "Miami": 0.07,
+      "New York": 0.0888,
+      "Los Angeles": 0.0975,
+      "Houston": 0.0825,
+      "Chicago": 0.1025
+      // Agrega más ciudades y sus tasas de impuestos según sea necesario
+    };
+
+    function addToCart(product) {
+      const existingProduct = cart.find(item => item.id === product.id);
+      if (existingProduct) {
+        existingProduct.quantity += 1;
+      } else {
+        cart.push({ ...product, quantity: 1 });
+      }
+      updateCart();
     }
-    renderCart();
-  }
 
-  function removeFromCart(id) {
-    const index = cart.findIndex(item => item.id === id);
-    if (index !== -1) {
-      cart.splice(index, 1);
-      renderCart();
+    function removeFromCart(productId) {
+      const index = cart.findIndex(item => item.id === productId);
+      if (index !== -1) {
+        cart.splice(index, 1);
+        updateCart();
+      }
     }
-  }
 
-  function renderCart() {
-    cartItemsEl.innerHTML = '';
-    let total = 0;
-    cart.forEach(item => {
-      total += item.price * item.quantity;
+    function updateCart() {
+      const cartItems = document.getElementById('cart-items');
+      cartItems.innerHTML = '';
+      let subtotal = 0;
+      cart.forEach(item => {
+        subtotal += item.price * item.quantity;
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'cart-item';
+        itemDiv.innerHTML = `
+          <span>${item.quantity} x ${item.name} - $${(item.price * item.quantity).toFixed(2)}</span>
+          <button onclick="removeFromCart(${item.id})">Eliminar</button>
+        `;
+        cartItems.appendChild(itemDiv);
+      });
+      document.getElementById('subtotal').textContent = subtotal.toFixed(2);
 
-      const li = document.createElement('li');
+      const city = document.getElementById('customer-city').value;
+      const taxRate = taxRates[city] || 0;
+      const taxes = subtotal * taxRate;
+      document.getElementById('taxes').textContent = taxes.toFixed(2);
 
-      li.innerHTML = `
-        <div class="info">
-          <span class="name">${item.name}</span>
-          <span class="qty-price">${item.quantity} x $${item.price.toFixed(2)}</span>
-        </div>
-        <button class="remove-btn" title="Eliminar producto">&times;</button>
-      `;
+      document.getElementById('shipping').textContent = shippingCost.toFixed(2);
+      const total = subtotal + shippingCost + taxes;
+      document.getElementById('total').textContent = total.toFixed(2);
+    }
 
-      li.querySelector('.remove-btn').addEventListener('click', () => {
-        removeFromCart(item.id);
+    function sendOrderWhatsApp() {
+      if (cart.length === 0) {
+        alert('Tu carrito está vacío.');
+        return;
+      }
+      const name = document.getElementById('customer-name').value.trim();
+      const address = document.getElementById('customer-address').value.trim();
+      const city = document.getElementById('customer-city').value;
+
+      if (!name || !address || !city) {
+        alert('Por favor, completa todos los campos de información del cliente.');
+        return;
+      }
+
+      let message = `Hola, soy ${name} y quiero hacer el siguiente pedido:\n\n`;
+      cart.forEach(item => {
+        message += `- ${item.quantity} x ${item.name} ($${(item.price * item.quantity).toFixed(2)})\n`;
       });
 
-      cartItemsEl.appendChild(li);
-    });
-    cartTotalEl.textContent = `Total: $${total.toFixed(2)}`;
-  }
+      const subtotal = parseFloat(document.getElementById('subtotal').textContent);
+      const taxes = parseFloat(document.getElementById('taxes').textContent);
+      const total = parseFloat(document.getElementById('total').textContent);
 
-  function sendOrderWhatsApp() {
-    if (cart.length === 0) {
-      alert('Tu carrito está vacío.');
-      return;
+      message += `\nSubtotal: $${subtotal.toFixed(2)}`;
+      message += `\nEnvío: $${shippingCost.toFixed(2)}`;
+      message += `\nImpuestos: $${taxes.toFixed(2)}`;
+      message += `\nTotal: $${total.toFixed(2)}\n\n`;
+      message += `Dirección de envío:\n${address}, ${city}`;
+
+      const whatsappNumber = '13465464520'; // Reemplaza con tu número de WhatsApp
+      const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
     }
-    let message = "Hola, quiero hacer el siguiente pedido:\n";
-    cart.forEach(item => {
-      message += `- ${item.quantity} x ${item.name} ($${(item.price * item.quantity).toFixed(2)})\n`;
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const perfumeEl = e.target.closest('.perfume');
+        const product = {
+          id: Number(perfumeEl.dataset.id),
+          name: perfumeEl.dataset.name,
+          price: Number(perfumeEl.dataset.price)
+        };
+        addToCart(product);
+      });
     });
-    message += `Total: $${cart.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)}\n\nGracias!`;
 
-    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
-  }
-
-  // Eventos de botones agregar
-  document.querySelectorAll('.add-to-cart').forEach(button => {
-    button.addEventListener('click', (e) => {
-      const perfumeEl = e.target.closest('.perfume');
-      const product = {
-        id: Number(perfumeEl.dataset.id),
-        name: perfumeEl.dataset.name,
-        price: Number(perfumeEl.dataset.price)
-      };
-      addToCart(product);
-    });
-  });
-
-  document.getElementById('send-whatsapp').addEventListener('click', sendOrderWhatsApp);
-</script>
+    document.getElementById('customer-city').addEventListener('change', updateCart);
+    document.getElementById('send-whatsapp').addEventListener('click', sendOrderWhatsApp);
+  </script>
 
 </body>
 </html>
