@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Perfumes Claudia - Tienda</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0; padding: 0;
+    background: #f9f6f1;
+    color: #333;
+  }
+  header {
+    background: #d88c9a;
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+  header h1 {
+    margin: 0 0 0.3rem;
+  }
+  header p {
+    font-style: italic;
+    margin: 0;
+  }
+  main {
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  section.catalogo {
+    flex: 2;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap: 1.5rem;
+  }
+  .perfume {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+    padding: 1rem;
+    text-align: center;
+  }
+  .perfume img {
+    max-width: 100%;
+    border-radius: 6px;
+  }
+  .perfume h3 {
+    margin: 0.8rem 0 0.3rem;
+    color: #b55263;
+  }
+  .perfume p {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0 0 0.8rem;
+  }
+  .precio {
+    font-weight: bold;
+    color: #8b3241;
+    margin-bottom: 1rem;
+  }
+  button.add-to-cart {
+    background: #25d366;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button.add-to-cart:hover {
+    background: #1ebe56;
+  }
+  aside.carrito {
+    flex: 1;
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+    min-width: 280px;
+    max-height: 600px;
+    display: flex;
+    flex-direction: column;
+  }
+  aside.carrito h2 {
+    margin-top: 0;
+    border-bottom: 1px solid #d88c9a;
+    padding-bottom: 0.5rem;
+    color: #b55263;
+  }
+  ul.cart-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+  ul.cart-items li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
+    font-size: 0.95rem;
+  }
+  .cart-total {
+    font-weight: bold;
+    margin: 1rem 0;
+    text-align: right;
+  }
+  #paypal-button-container {
+    text-align: center;
+  }
+  footer {
+    background: #d88c9a;
+    color: white;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    margin-top: 3rem;
+  }
+  footer a {
+    color: #fff;
+    text-decoration: underline;
+  }
+  @media (max-width: 900px) {
+    main {
+      flex-direction: column;
+    }
+    aside.carrito {
+      max-height: none;
+      margin-top: 2rem;
+      min-width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Perfumes Claudia</h1>
+  <p>Fragancias irresistibles para cada estilo y momento</p>
+</header>
+
+<main>
+  <section class="catalogo" aria-label="Catálogo de perfumes">
+
+    <article class="perfume" data-id="1" data-name="Perfume Bella" data-price="25">
+      <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80" alt="Perfume Bella" />
+      <h3>Perfume Bella</h3>
+      <p>Aroma floral con toques de vainilla.</p>
+      <div class="precio">$25</div>
+      <button class="add-to-cart">Agregar al carrito</button>
+    </article>
+
+    <article class="perfume" data-id="2" data-name="Perfume Elegance" data-price="30">
+      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Perfume Elegance" />
+      <h3>Perfume Elegance</h3>
+      <p>Notas amaderadas con fondo de ámbar.</p>
+      <div class="precio">$30</div>
+      <button class="add-to-cart">Agregar al carrito</button>
+    </article>
+
+    <article class="perfume" data-id="3" data-name="Perfume Sweet Love" data-price="20">
+      <img src="https://images.unsplash.com/photo-1508163221342-1798d1a4c5e9?auto=format&fit=crop&w=400&q=80" alt="Perfume Sweet Love" />
+      <h3>Perfume Sweet Love</h3>
+      <p>Dulce y juvenil, perfecto para casual.</p>
+      <div class="precio">$20</div>
+      <button class="add-to-cart">Agregar al carrito</button>
+    </article>
+
+  </section>
+
+  <aside class="carrito" aria-label="Carrito de compras">
+    <h2>Tu Carrito</h2>
+    <ul class="cart-items"></ul>
+    <div class="cart-total">Total: $0</div>
+    <div id="paypal-button-container"></div>
+  </aside>
+</main>
+
+<footer>
+  <p>Contacto:  
+    <a href="mailto:perfumesclaudia@email.com">perfumesclaudia@email.com</a> |  
+    <a href="https://instagram.com/perfumesclaudia" target="_blank" rel="noopener noreferrer">Instagram</a> |  
+    <a href="https://wa.me/573001234567" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+  </p>
+  <p>© 2025 Perfumes Claudia</p>
+</footer>
+
+<!-- PayPal SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=USD"></script>
+
+<script>
+  const cart = [];
+  const cartItemsEl = document.querySelector('.cart-items');
+  const cartTotalEl = document.querySelector('.cart-total');
+
+  // Agregar producto al carrito
+  function addToCart(product) {
+    const existing = cart.find(item => item.id === product.id);
+    if (existing) {
+      existing.quantity++;
+    } else {
+      cart.push({...product, quantity: 1});
+    }
+    renderCart();
+  }
+
+  // Renderizar carrito en pantalla
+  function renderCart() {
+    cartItemsEl.innerHTML = '';
+    let total = 0;
+    cart.forEach(item => {
+      total += item.price * item.quantity;
+      const li = document.createElement('li');
+      li.textContent = `${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`;
+      cartItemsEl.appendChild(li);
+    });
+    cartTotalEl.textContent = `Total: $${total.toFixed(2)}`;
+  }
+
+  // Capturar click en botones "Agregar al carrito"
+  document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', () => {
+      const perfume = button.closest('.perfume');
+      const product = {
+        id: perfume.dataset.id,
+        name: perfume.dataset.name,
+        price: parseFloat(perfume.dataset.price)
+      };
+      addToCart(product);
+    });
+  });
+
+  // Inicializar PayPal Button
+  paypal.Buttons({
+    style: {
+      shape: 'rect',
+      color: 'gold',
+      layout: 'vertical',
+      label: 'paypal',
+    },
+    createOrder: function(data, actions) {
+      const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      if (total <= 0) {
+       
