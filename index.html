@@ -3,14 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Perfumes Claudia - Tienda</title>
+<title>Perfumes Claudia - Pedido por WhatsApp</title>
 <style>
-  /* Estilos igual que antes... */
   body {
     font-family: Arial, sans-serif;
-    margin: 0; padding: 0;
     background: #f9f6f1;
     color: #333;
+    margin: 0; padding: 0;
   }
   header {
     background: #d88c9a;
@@ -21,12 +20,8 @@
   header h1 {
     margin: 0 0 0.3rem;
   }
-  header p {
-    font-style: italic;
-    margin: 0;
-  }
   main {
-    max-width: 960px;
+    max-width: 900px;
     margin: 2rem auto;
     padding: 0 1rem;
     display: flex;
@@ -112,8 +107,19 @@
     margin: 1rem 0;
     text-align: right;
   }
-  #paypal-button-container {
-    text-align: center;
+  button#send-whatsapp {
+    background: #128c7e;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.2rem;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: auto;
+  }
+  button#send-whatsapp:hover {
+    background: #0f6f66;
   }
   footer {
     background: #d88c9a;
@@ -177,8 +183,8 @@
   <aside class="carrito" aria-label="Carrito de compras">
     <h2>Tu Carrito</h2>
     <ul class="cart-items"></ul>
-    <div class="cart-total">Total: $0</div>
-    <div id="paypal-button-container"></div>
+    <div class="cart-total">Total: $0.00</div>
+    <button id="send-whatsapp">Enviar pedido por WhatsApp</button>
   </aside>
 </main>
 
@@ -186,20 +192,17 @@
   <p>Contacto:  
     <a href="mailto:perfumesclaudia@email.com">perfumesclaudia@email.com</a> |  
     <a href="https://instagram.com/perfumesclaudia" target="_blank" rel="noopener noreferrer">Instagram</a> |  
-    <a href="https://wa.me/573001234567" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+    <a href="https://wa.me/13465464520" target="_blank" rel="noopener noreferrer">WhatsApp</a>
   </p>
   <p>© 2025 Perfumes Claudia</p>
 </footer>
-
-<!-- PayPal SDK -->
-<script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=USD"></script>
 
 <script>
   const cart = [];
   const cartItemsEl = document.querySelector('.cart-items');
   const cartTotalEl = document.querySelector('.cart-total');
+  const whatsappNumber = "13465464520"; // USA número con código país (1) sin espacios ni signos
 
-  // Agregar producto al carrito
   function addToCart(product) {
     const existing = cart.find(item => item.id === product.id);
     if (existing) {
@@ -210,20 +213,18 @@
     renderCart();
   }
 
-  // Renderizar carrito en pantalla
   function renderCart() {
     cartItemsEl.innerHTML = '';
     let total = 0;
     cart.forEach(item => {
       total += item.price * item.quantity;
       const li = document.createElement('li');
-      li.textContent = `${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`;
+      li.textContent = `${item.name} x${item.quantity} = $${(item.price * item.quantity).toFixed(2)}`;
       cartItemsEl.appendChild(li);
     });
     cartTotalEl.textContent = `Total: $${total.toFixed(2)}`;
   }
 
-  // Capturar click en botones "Agregar al carrito"
   document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', () => {
       const perfume = button.closest('.perfume');
@@ -236,37 +237,21 @@
     });
   });
 
-  // Inicializar PayPal Button
-  paypal.Buttons({
-    style: {
-      shape: 'rect',
-      color: 'gold',
-      layout: 'vertical',
-      label: 'paypal',
-    },
-    createOrder: function(data, actions) {
-      const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-      if (total <= 0) {
-        alert('Tu carrito está vacío.');
-        return actions.reject();
-      }
-      return actions.order.create({
-        purchase_units: [{
-          amount: {
-            value: total.toFixed(2)
-          }
-        }]
-      });
-    },
-    onApprove: function(data, actions) {
-      return actions.order.capture().then(function(details) {
-        alert('¡Gracias por tu compra, ' + details.payer.name.given_name + '!');
-        cart.length = 0; // vaciar carrito
-        renderCart();
-      });
+  document.getElementById('send-whatsapp').addEventListener('click', () => {
+    if (cart.length === 0) {
+      alert("Tu carrito está vacío. Agrega productos antes de enviar.");
+      return;
     }
-  }).render('#paypal-button-container');
+    let message = "Hola, quiero hacer un pedido de perfumes:\n";
+    cart.forEach(item => {
+      message += `- ${item.name} x${item.quantity} = $${(item.price * item.quantity).toFixed(2)}\n`;
+    });
+    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    message += `Total: $${total.toFixed(2)}\n\nPor favor, contáctame para coordinar la entrega. ¡Gracias!`;
 
+    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+  });
 </script>
 
 </body>
