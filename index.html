@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Perfumes Claudia - Tienda</title>
 <style>
+  /* Estilos igual que antes... */
   body {
     font-family: Arial, sans-serif;
     margin: 0; padding: 0;
@@ -246,4 +247,27 @@
     createOrder: function(data, actions) {
       const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
       if (total <= 0) {
-       
+        alert('Tu carrito está vacío.');
+        return actions.reject();
+      }
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: total.toFixed(2)
+          }
+        }]
+      });
+    },
+    onApprove: function(data, actions) {
+      return actions.order.capture().then(function(details) {
+        alert('¡Gracias por tu compra, ' + details.payer.name.given_name + '!');
+        cart.length = 0; // vaciar carrito
+        renderCart();
+      });
+    }
+  }).render('#paypal-button-container');
+
+</script>
+
+</body>
+</html>
